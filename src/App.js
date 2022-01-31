@@ -1,6 +1,7 @@
 import React from 'react'
-import { AppContainer } from './components/AppContainer'
+
 import styled from 'styled-components'
+import Home from './components/Home/Home'
 
 const Header = styled.header`
    display: flex;
@@ -32,7 +33,7 @@ class App extends React.Component {
 					<button>Carrinho</button>
 				</div>
 			</Header>
-			<AppContainer />
+			<Home/>
 			<Footer>
 				<h2>Central de atendimento</h2>
 				<p>+55 (11) 1111-1111</p>
