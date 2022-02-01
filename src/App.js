@@ -4,6 +4,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Home from './components/Home/Home'
 import Carrinho from './components/Carrinho/Carrinho';
+import { ChakraProvider } from '@chakra-ui/react';
 
 const Header = styled.header`
    display: flex;
