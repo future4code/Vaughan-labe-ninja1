@@ -1,8 +1,9 @@
 
 import React from 'react'
-import Card from './components/Cards/Card';
+// import Card from './components/Cards/Card';
 import styled from 'styled-components'
 import Home from './components/Home/Home'
+import Carrinho from './components/Carrinho/Carrinho';
 
 const Header = styled.header`
    display: flex;
@@ -24,26 +25,54 @@ const Footer = styled.footer`
 `
 
 class App extends React.Component {
-	render() {
-	return (
-		<div>
-			<Header>
-				<h1>Labeninjas</h1>
+
+	state = {
+		tela: "app"
+	}
+	
+	mudarTela = () => {
+		console.log(this.state.tela)
+		switch (this.state.tela) {
+			case "app":
+				return <Home/>
+			case "carrinho":
+				return <Carrinho/>
+			default:
+				return <Home/>
+		}}
+
+	telaHome = () => {
+		this.setState({tela: "app"})
+	}
+	telaCarrinho = () => {
+		this.setState({tela: "carrinho"})
+	}
+		render() {
+
+			return (
+
 				<div>
-					<button>Home</button>
-					<button>Carrinho</button>
+					<Header>
+						<h1>Labeninjas</h1>
+						<div>
+							<button onClick={this.telaHome} >Home</button>
+							<button onClick={this.telaCarrinho}>Carrinho</button>
+						</div>
+					</Header>
+					{this.mudarTela()}
+					<Footer>
+						<h2>Central de atendimento</h2>
+						<p>+55 (11) 1111-1111</p>
+						<p>secretaria.labeninjas@org.br</p>
+					</Footer>
+
 				</div>
-			</Header>
-			<Home/>
-			<Footer>
-				<h2>Central de atendimento</h2>
-				<p>+55 (11) 1111-1111</p>
-				<p>secretaria.labeninjas@org.br</p>
-			</Footer>
-        	
-		</div>
-	)}
-}
+
+
+			);
+		}
+	}
+	
 
 export default App
 
