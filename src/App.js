@@ -1,5 +1,6 @@
-import React from 'react'
 
+import React from 'react'
+import Card from './components/Cards/Card';
 import styled from 'styled-components'
 import Home from './components/Home/Home'
 
@@ -45,3 +46,4 @@ class App extends React.Component {
 }
 
 export default App
+
