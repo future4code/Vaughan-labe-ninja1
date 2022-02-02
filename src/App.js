@@ -38,23 +38,26 @@ class App extends React.Component {
 			case "app":
 				return <Home telaCards={this.telaCards} />
 			case "carrinho":
-				return <Carrinho />
-			case "cards":
-				return <Card />
 
+				return <Carrinho telaCard={this.telaCard}/>
+			case "cards":
+				return <Card/>
 			default:
-				return <Home telaCards={this.telaCards} />
+				return <Home/>
 		}
-	}
+            
+    }
+
+	telaCard = () => {
+		this.setState({tela: "cards"})
+
+  }
 
 	telaHome = () => {
 		this.setState({ tela: "app" })
 	}
 	telaCarrinho = () => {
 		this.setState({ tela: "carrinho" })
-	}
-	telaCards = () => {
-		this.setState({ tela: "cards" })
 	}
 
 	render() {
