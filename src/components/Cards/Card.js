@@ -9,6 +9,11 @@ grid-template-columns: repeat(4, 1fr);
 grid-row-gap: 20px;
 grid-column-gap: 20px;
 `
+const CorDeFundo = styled.div`
+background-color: #fdf6e6;
+height: 1fr;
+display: grid;
+`
 
 
 export default class Card extends React.Component{
@@ -55,6 +60,68 @@ export default class Card extends React.Component{
                 preco:1,
                 data:"25/01/2022"
             },
+            {
+                titulo: "Aulas de Filosofia",
+                preco:1,
+                data:"25/01/2022"
+            },
+            {
+                titulo: "Aulas de Filosofia",
+                preco:1,
+                data:"25/01/2022"
+            },
+            {
+                titulo: "Aulas de Filosofia",
+                preco:1,
+                data:"25/01/2022"
+            },
+            {
+                titulo: "Aulas de Filosofia",
+                preco:1,
+                data:"25/01/2022"
+            },
+            {
+                titulo: "Aulas de Filosofia",
+                preco:1,
+                data:"25/01/2022"
+            }, {
+                titulo: "Aulas de Filosofia",
+                preco:1,
+                data:"25/01/2022"
+            }, {
+                titulo: "Aulas de Filosofia",
+                preco:1,
+                data:"25/01/2022"
+            }, {
+                titulo: "Aulas de Filosofia",
+                preco:1,
+                data:"25/01/2022"
+            }, {
+                titulo: "Aulas de Filosofia",
+                preco:1,
+                data:"25/01/2022"
+            }, {
+                titulo: "Aulas de Filosofia",
+                preco:1,
+                data:"25/01/2022"
+            }, {
+                titulo: "Aulas de Filosofia",
+                preco:1,
+                data:"25/01/2022"
+            }, {
+                titulo: "Aulas de Filosofia",
+                preco:1,
+                data:"25/01/2022"
+            }, {
+                titulo: "Aulas de Filosofia",
+                preco:1,
+                data:"25/01/2022"
+            }, {
+                titulo: "Aulas de Filosofia",
+                preco:1,
+                data:"25/01/2022"
+            },
+
         ]
     }
 
@@ -71,10 +138,12 @@ export default class Card extends React.Component{
 
 
         return((
-            <CardBody>
-                {card}
-            </CardBody>
-            
+          <CorDeFundo>
+                <CardBody>
+                    {card}
+                </CardBody>
+                
+          </CorDeFundo>
         ))
     }
 };
