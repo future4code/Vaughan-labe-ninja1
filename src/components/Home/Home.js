@@ -17,13 +17,15 @@ align-self: center;
 `
 
 
+
 export default class Home extends React.Component{
     render(){
+        console.log('home',this.props)
         return(
            <div>
                <Home1>LabeNinjas</Home1>
                <Home2>O talento certo no momento certo</Home2>
-               <ButtonHome/>
+               <ButtonHome telaCards={this.props.telaCards}  />
            </div>
         )
     }
