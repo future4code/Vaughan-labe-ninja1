@@ -14,12 +14,16 @@ justify-content: center;
 `
 
 
+
 export default class ButtonSerNinja extends React.Component{
+  
+  
     render(){
+        console.log('buttonhome',this.props)
         return(
             <Centralizar>
                 <BotaoCentro >Quero ser LabeNinja </BotaoCentro>
-                <BotaoCentro > Contratar um LabeNinja  </BotaoCentro>
+                <BotaoCentro onClick={this.props.telaCards} > Contratar um LabeNinja  </BotaoCentro>
             </Centralizar>
         )
     }
