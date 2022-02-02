@@ -68,7 +68,7 @@ export default class Card extends React.Component{
     render(){
         let card= this.exemplo.cards.map( obj => {
             return(
-                <Cards>
+                <Cards key={obj.titulo}>
                     <h3>{obj.titulo}</h3>
                     <p>R$ {obj.preco},00</p>
                     <p>{obj.data}</p>                    

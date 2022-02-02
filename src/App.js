@@ -7,7 +7,6 @@ import Carrinho from './components/Carrinho/Carrinho';
 import { ChakraProvider } from '@chakra-ui/react';
 import Card from './components/Cards/Card';
 
-
 const Header = styled.header`
    display: flex;
    justify-content: space-between;
@@ -32,13 +31,14 @@ class App extends React.Component {
 	state = {
 		tela: "app"
 	}
-	
+
 	mudarTela = () => {
 		console.log(this.state.tela)
 		switch (this.state.tela) {
 			case "app":
-				return <Home/>
+				return <Home telaCards={this.telaCards} />
 			case "carrinho":
+
 				return <Carrinho telaCard={this.telaCard}/>
 			case "cards":
 				return <Card/>
@@ -50,40 +50,44 @@ class App extends React.Component {
 
 	telaCard = () => {
 		this.setState({tela: "cards"})
-	}
+
+  }
 
 	telaHome = () => {
-		this.setState({tela: "app"})
+		this.setState({ tela: "app" })
 	}
 	telaCarrinho = () => {
-		this.setState({tela: "carrinho"})
+		this.setState({ tela: "carrinho" })
 	}
-		render() {
 
-			return (
+	render() {
 
-				<div>
-					<Header>
-						<h1>Labeninjas</h1>
-						<div>
-							<button onClick={this.telaHome} >Home</button>
-							<button onClick={this.telaCarrinho}>Carrinho</button>
-						</div>
-					</Header>
-					{this.mudarTela()}
-					<Footer>
-						<h2>Central de atendimento</h2>
-						<p>+55 (11) 1111-1111</p>
-						<p>secretaria.labeninjas@org.br</p>
-					</Footer>
+		return (
 
-				</div>
+			<div>
+				<Header>
+					<h1>Labeninjas</h1>
+					<div>
+						<button onClick={this.telaHome} >Home</button>
+						<button onClick={this.telaCarrinho}>Carrinho</button>
+
+					</div>
+				</Header>
+				{this.mudarTela()}
+				<Footer>
+					<h2>Central de atendimento</h2>
+					<p>+55 (11) 1111-1111</p>
+					<p>secretaria.labeninjas@org.br</p>
+
+				</Footer>
+
+			</div>
 
 
-			);
-		}
+		);
 	}
-	
+}
+
 
 export default App
 
