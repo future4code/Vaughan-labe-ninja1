@@ -5,6 +5,8 @@ import styled from 'styled-components'
 import Home from './components/Home/Home'
 import Carrinho from './components/Carrinho/Carrinho';
 import { ChakraProvider } from '@chakra-ui/react';
+import Card from './components/Cards/Card';
+
 
 const Header = styled.header`
    display: flex;
@@ -37,10 +39,18 @@ class App extends React.Component {
 			case "app":
 				return <Home/>
 			case "carrinho":
-				return <Carrinho/>
+				return <Carrinho telaCard={this.telaCard}/>
+			case "cards":
+				return <Card/>
 			default:
 				return <Home/>
-		}}
+		}
+            
+    }
+
+	telaCard = () => {
+		this.setState({tela: "cards"})
+	}
 
 	telaHome = () => {
 		this.setState({tela: "app"})

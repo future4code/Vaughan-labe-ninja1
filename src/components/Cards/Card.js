@@ -15,42 +15,49 @@ export default class Card extends React.Component{
 
     exemplo={
         cards:[
-            {
+            {   
+                id: 1,
                 titulo: "Aulas de Francês",
                 preco:125,
                 data:"04/01/2022"
             },
             {
+                id: 2,
                 titulo: "Aulas de Sei Lá",
                 preco:255,
                 data:"06/02/2022"
             },
             {
+                id: 3,
                 titulo: "Aulas de alguma coisa",
                 preco:300,
                 data:"14/03/2022"
             },
-            {
+            {   id: 4,
                 titulo: "Aulas de Italiano",
                 preco:100,
                 data:"15/03/2022"
             },
             {
+                id: 5,
                 titulo: "Aulas de Dormir",
                 preco:500,
                 data:"06/08/2022"
             },
             {
+                id: 6,
                 titulo: "Aulas de Não sei o que",
                 preco:6000,
                 data:"01/04/2022"
             },
             {
+                id: 7,
                 titulo: "Aulas de Alemão",
                 preco:235,
                 data:"09/10/2022"
             },
             {
+                id: 8,
                 titulo: "Aulas de Filosofia",
                 preco:1,
                 data:"25/01/2022"
