@@ -8,4 +8,6 @@ export const theme = extendTheme({
             600: '#45525B'
         }
     }
+
+  
 })
