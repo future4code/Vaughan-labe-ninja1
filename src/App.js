@@ -70,7 +70,7 @@ class App extends React.Component {
 			case "cards":
 				return <Card/>
 			default:
-				return <Home/>
+				return <Home telaCard={this.telaCard} />
 		}
             
     }
