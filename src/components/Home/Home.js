@@ -39,7 +39,7 @@ export default class Home extends React.Component {
                 <CorDeFundo>
                     <Home1>LabeNinjas</Home1>
                     <Home2>O talento certo no momento certo</Home2>
-                    <ButtonHome telaCard={this.props.telaCard} />
+                    <ButtonHome cadastro={this.props.cadastro} telaCard={this.props.telaCard} />
 
                 </CorDeFundo>
                 <FlexPostIt><PostIt /></FlexPostIt>
