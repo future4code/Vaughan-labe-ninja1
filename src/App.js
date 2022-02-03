@@ -8,13 +8,16 @@ import { ChakraProvider, position } from '@chakra-ui/react';
 import Card from './components/Cards/Card';
 import { theme } from './components/Theme/Theme';
 import PostIt from './components/Cards/CardsFlutuantes'
+import CadastroDeServico from './components/Cadastro/CadastroDeServico'
+import {BotaoCentro} from "./components/Home/ButtonHome"
+
 
 
 const Header = styled.header`
    display: flex;
    justify-content: space-between;
    align-items:center;
-    background-color:#FC7C01;
+    background-color:#F6AF56;
 	padding: 10px;
 	border: solid 1px black;
 	height:50px;
@@ -63,28 +66,32 @@ class App extends React.Component {
 		console.log(this.state.tela)
 		switch (this.state.tela) {
 			case "app":
-				return <Home telaCard={this.telaCard} />
+				return <Home cadastro={this.telaCadastro} telaCard={this.telaCard} />
 			case "carrinho":
-
-				return <Carrinho telaCard={this.telaCard}/>
+				return <Carrinho telaCard={this.telaCard} />
+			case "cadastro":
+				return <CadastroDeServico />
 			case "cards":
-				return <Card/>
+				return <Card />
 			default:
-				return <Home telaCard={this.telaCard} />
+				return <Home cadastro={this.telaCadastro} telaCard={this.telaCard} />
 		}
-            
-    }
+
+	}
 
 	telaCard = () => {
-		this.setState({tela: "cards"})
+		this.setState({ tela: "cards" })
 
-  }
+	}
 
 	telaHome = () => {
 		this.setState({ tela: "app" })
 	}
 	telaCarrinho = () => {
 		this.setState({ tela: "carrinho" })
+	}
+	telaCadastro = () => {
+		this.setState({ tela: "cadastro" })
 	}
 
 	render() {
@@ -97,8 +104,8 @@ class App extends React.Component {
 				<Header>
 					<Labeninjas>LabeNinjas</Labeninjas>
 					<div>
-						<button onClick={this.telaHome} >Home</button>
-						<button onClick={this.telaCarrinho}>Carrinho</button>
+						<BotaoCentro onClick={this.telaHome} >Home</BotaoCentro>
+						<BotaoCentro onClick={this.telaCarrinho}>Carrinho</BotaoCentro>
 
 					</div>
 				</Header>
