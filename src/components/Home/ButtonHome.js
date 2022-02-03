@@ -59,7 +59,7 @@ export default class ButtonSerNinja extends React.Component{
                    
                   <selection>
                         
-                        <BotaoCentro  onClick={this.props.telaCards} > Contratar um LabeNinja  </BotaoCentro>
+                        <BotaoCentro  onClick={this.props.telaCard} > Contratar um LabeNinja  </BotaoCentro>
                         <ImagemNinja src={Ninja} ></ImagemNinja>
                   </selection>
             </Centralizar>

@@ -56,14 +56,14 @@ font-size:32px;
 class App extends React.Component {
 
 	state = {
-		tela: "cards"
+		tela: ""
 	}
 
 	mudarTela = () => {
 		console.log(this.state.tela)
 		switch (this.state.tela) {
 			case "app":
-				return <Home telaCards={this.telaCards} />
+				return <Home telaCard={this.telaCard} />
 			case "carrinho":
 
 				return <Carrinho telaCard={this.telaCard}/>
