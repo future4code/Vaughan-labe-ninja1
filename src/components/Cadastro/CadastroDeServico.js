@@ -1,9 +1,10 @@
 import { Checkbox, List, useCheckbox } from "@chakra-ui/react";
+import axios from "axios";
 import React from "react";
 import styled from "styled-components";
 const Container=styled.div`
     width:450px;
-    height:600px;
+    height:800px;
     margin:auto;
     display:flex;
     flex-direction:column;
@@ -49,10 +50,11 @@ const Button= styled.button`
 `;
 export default class CadastroDeServico extends React.Component{
     state = {
+        servicos:[],
         inputTitulo:"",
         inputDescricao:"",
         inputPreco:"",
-        selectPagamento:"",
+        selectPagamento:[],
         inputData:"",
     }
     onChangeInputTitulo= event => {
@@ -63,18 +65,52 @@ export default class CadastroDeServico extends React.Component{
     }
     onChangeInputPreco= event => {
         this.setState({inputPreco:event.target.value})
+        
     }
     onChangeSelectPagamento= event => {
-        this.setState({selectPagamento:event.target.value})
+        this.setState({selectPagamento:[...this.state.selectPagamento, event.target.value]})
     }
     onChangeInputData= event => {
         this.setState({inputData:event.target.value})
     }
-    cadastrarServicos= () => {
+    
+    
+    gerandoKey = async () => {
+        const url = "https://labeninjas.herokuapp.com/auth"
+        const body = {"name": "ninjaas-ninjasdalabenu"}
+
+        try{
+            const resposta = await axios.post(url, body)
+            console.log(resposta.data)
+
+        }catch(erro){
+            console.log(erro.response)
+            
+            alert("Key errada")
+        }
+        
+    }
+    
+    cadastrarServicos= async () => {
         const data= new Date();
         const ano= data.getFullYear();
         const mes= data.getMonth() + 1;
         const dia= data.getDate();
+        const url = "https://labeninjas.herokuapp.com/jobs"
+        const body = {"title": this.state.inputTitulo, "description": this.state.inputDescricao, "price": Number(this.state.inputPreco), "paymentMethods": this.state.selectPagamento, "dueDate": this.state.inputData}
+        try{
+            const resposta = await axios.post(url, body, {
+                headers: {
+                    Authorization: '9d13116d-4ff4-41b1-979f-9bf62ff1e99d'
+                }
+             })
+             this.setState({servicos: resposta.data})
+            alert("Serviço cadastrado com sucesso!!")
+        }catch(erro){
+            console.log(erro.response)
+            alert("Ocorreu um erro, o serviço não foi cadastrado!")
+        }
+
         const [inputDataAno, inputDataMes, inputDataDia] = this.state.inputData.split("-")
         if(this.state.inputTitulo === "" || this.state.inputDescricao === "" ||this.state.inputPreco === "" || this.state.selectPagamento === ""||this.state.inputData === ""){
             alert("Preencha os campos corretamente")
@@ -84,8 +120,10 @@ export default class CadastroDeServico extends React.Component{
             alert("Preencha com uma data válida")
             return;
         }
-        alert("Serviço Cadastrado corretamente")
     }
+
+    
+
     render(){
         return(
           <CorDeFundo>

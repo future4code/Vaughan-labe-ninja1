@@ -1,3 +1,5 @@
+import { toHaveStyle } from "@testing-library/jest-dom";
+import axios from "axios";
 import React from "react";
 import styled from "styled-components";
 import { Cards } from "./CardsEstilos";
@@ -14,143 +16,80 @@ background-color: #fdf6e6;
 height: 1fr;
 display: grid;
 `
+const Filtro = styled.div`
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+    gap: 10px;
+`
 
+export default class Card extends React.Component {
 
-export default class Card extends React.Component{
-
-    exemplo={
-        cards:[
-            {   
-                id: 1,
-                titulo: "Aulas de Francês",
-                preco:125,
-                data:"04/01/2022"
-            },
-            {
-                id: 2,
-                titulo: "Aulas de Sei Lá",
-                preco:255,
-                data:"06/02/2022"
-            },
-            {
-                id: 3,
-                titulo: "Aulas de alguma coisa",
-                preco:300,
-                data:"14/03/2022"
-            },
-            {   id: 4,
-                titulo: "Aulas de Italiano",
-                preco:100,
-                data:"15/03/2022"
-            },
-            {
-                id: 5,
-                titulo: "Aulas de Dormir",
-                preco:500,
-                data:"06/08/2022"
-            },
-            {
-                id: 6,
-                titulo: "Aulas de Não sei o que",
-                preco:6000,
-                data:"01/04/2022"
-            },
-            {
-                id: 7,
-                titulo: "Aulas de Alemão",
-                preco:235,
-                data:"09/10/2022"
-            },
-            {
-                id: 8,
-                titulo: "Aulas de Filosofia",
-                preco:1,
-                data:"25/01/2022"
-            },
-            {
-                titulo: "Aulas de Filosofia",
-                preco:1,
-                data:"25/01/2022"
-            },
-            {
-                titulo: "Aulas de Filosofia",
-                preco:1,
-                data:"25/01/2022"
-            },
-            {
-                titulo: "Aulas de Filosofia",
-                preco:1,
-                data:"25/01/2022"
-            },
-            {
-                titulo: "Aulas de Filosofia",
-                preco:1,
-                data:"25/01/2022"
-            },
-            {
-                titulo: "Aulas de Filosofia",
-                preco:1,
-                data:"25/01/2022"
-            }, {
-                titulo: "Aulas de Filosofia",
-                preco:1,
-                data:"25/01/2022"
-            }, {
-                titulo: "Aulas de Filosofia",
-                preco:1,
-                data:"25/01/2022"
-            }, {
-                titulo: "Aulas de Filosofia",
-                preco:1,
-                data:"25/01/2022"
-            }, {
-                titulo: "Aulas de Filosofia",
-                preco:1,
-                data:"25/01/2022"
-            }, {
-                titulo: "Aulas de Filosofia",
-                preco:1,
-                data:"25/01/2022"
-            }, {
-                titulo: "Aulas de Filosofia",
-                preco:1,
-                data:"25/01/2022"
-            }, {
-                titulo: "Aulas de Filosofia",
-                preco:1,
-                data:"25/01/2022"
-            }, {
-                titulo: "Aulas de Filosofia",
-                preco:1,
-                data:"25/01/2022"
-            }, {
-                titulo: "Aulas de Filosofia",
-                preco:1,
-                data:"25/01/2022"
-            },
-
-        ]
+    state = {
+        cards: []
     }
 
-    render(){
-        let card= this.exemplo.cards.map( obj => {
-            return(
-                <Cards key={obj.titulo}>
-                    <h3>{obj.titulo}</h3>
-                    <p>R$ {obj.preco},00</p>
-                    <p>{obj.data}</p>                    
+    componentDidMount () {
+        this.getServicos()
+    }
+
+    getServicos = async () => {
+        const url = "https://labeninjas.herokuapp.com/jobs"
+
+        try{
+            const resposta = await axios.get(url, {
+                headers: {
+                    Authorization: '9d13116d-4ff4-41b1-979f-9bf62ff1e99d'
+                }
+            })
+            this.setState({cards: resposta.data.jobs})
+           
+        }catch(erro){
+           
+            alert("Serviços indisponíveis")
+        }
+    }
+
+    render() {
+        console.log(this.state.cards)
+        let card = this.state.cards.map((obj) => {
+            return (
+                <Cards key={obj.title}>
+                    <h3>{obj.title}</h3>
+                    <p>R$ {obj.price},00</p>
+                    <p>{obj.dueDate.slice(0, 10).split("-").reverse().join("/")}</p>
                 </Cards>
             )
         })
+        
 
+        return ((
 
-        return((
-          <CorDeFundo>
+            <CorDeFundo>
+                 <Filtro>
+                        <div>
+                            <input placeholder="Valor mínimo" type="number" ></input>
+                        </div>
+                        <div>
+                            <input placeholder="Valor máximo"  type="number" ></input>
+                        </div>
+                        <div>
+                            <input placeholder="Título ou descrição"  type="text" ></input>
+                        </div>
+                        <select>
+                            <option value="ordenacao">Sem ordenação</option>
+                            <option value="menorvalor">Menor valor</option>
+                            <option value="maiorvalor">Maior valor</option>
+                            <option value="titulo">Título</option>
+                            <option value="prazo">Prazo</option>
+                        </select>
+                    </Filtro>
                 <CardBody>
+        
                     {card}
                 </CardBody>
-                
-          </CorDeFundo>
+
+            </CorDeFundo>
         ))
     }
 };
