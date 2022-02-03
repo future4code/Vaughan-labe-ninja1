@@ -33,6 +33,28 @@ export default class Card extends React.Component {
         this.getServicos()
     }
 
+    getDetalhes =  async (event) => {
+        const url = `https://labeninjas.herokuapp.com/jobs/${event.id}`
+        
+        try{
+            const resposta = await axios.get(url, {
+                headers: {
+                    Authorization: '9d13116d-4ff4-41b1-979f-9bf62ff1e99d'
+                }
+            })
+            this.setState({cards:resposta.id})
+            console.log(resposta.id)
+
+        } catch (erro){
+            console.log(erro.response)
+            alert("Ocorreu um erro. Tente novamente!")
+        }
+        
+    }
+
+
+
+
     getServicos = async () => {
         const url = "https://labeninjas.herokuapp.com/jobs"
 
@@ -45,7 +67,7 @@ export default class Card extends React.Component {
             this.setState({cards: resposta.data.jobs})
            
         }catch(erro){
-           
+            console.log(erro.response)
             alert("Serviços indisponíveis")
         }
     }
@@ -58,6 +80,9 @@ export default class Card extends React.Component {
                     <h3>{obj.title}</h3>
                     <p>R$ {obj.price},00</p>
                     <p>{obj.dueDate.slice(0, 10).split("-").reverse().join("/")}</p>
+                    <button onClick={this.getDetalhes}>Ver detalhes</button>
+                    <button onClick={() => this.props.aoAdicionarServicoNoCarrinho(obj.id)}>
+                        Adicionar ao carrinho</button>
                 </Cards>
             )
         })
