@@ -3,6 +3,7 @@ import axios from "axios";
 import React from "react";
 import styled from "styled-components";
 import { Cards } from "./CardsEstilos";
+import SaibaMais from "../SaibaMais";
 
 const CardBody = styled.div`
 padding: 20px;
@@ -30,9 +31,33 @@ export default class Card extends React.Component {
         ordenacao: "ordenacao",
         Vminimo: "",
         Vmaximo: '',
-        PorNome: ''
+        PorNome: '',
+        tela: "cards",
+        detalhedocard: []
     }
 
+    mudarTela = () => {
+		console.log(this.state.tela)
+		switch (this.state.tela) {
+			case "verdetalhe":
+				return <SaibaMais telaDetalhe={this.telaDetalhe} />
+			case "cards":
+				return <Card />
+			default:
+				return <Card telaCard={this.telaCard} />
+		}
+
+	}
+
+	telaCard = () => {
+		this.setState({ tela: "cards" })
+
+	}
+
+	telaDetalhe = () => {
+		this.setState({ tela: "verdetalhe" })
+   
+	}
     componentDidMount() {
         this.getServicos()
     }
@@ -51,20 +76,22 @@ export default class Card extends React.Component {
         this.setState({ PorNome: event.target.value })
     }
 
-    getDetalhes = async (event) => {
-        const url = `https://labeninjas.herokuapp.com/jobs/${event.id}`
-
+    getDetalhes = async (id) => {
+       
+        const url = `https://labeninjas.herokuapp.com/jobs/${id}`
+        
         try {
             const resposta = await axios.get(url, {
                 headers: {
                     Authorization: '9d13116d-4ff4-41b1-979f-9bf62ff1e99d'
                 }
             })
-            this.setState({ cards: resposta.id })
+            this.setState({ detalhedocard: resposta.data })
+            this.setState({ tela: "verdetalhe" })
             
-
+            
         } catch (erro) {
-           
+            console.log(erro.response)
             alert("Ocorreu um erro. Tente novamente!")
         }
 
@@ -116,18 +143,19 @@ export default class Card extends React.Component {
             })
             .map(obj => {
                 return (
+                   
                     <div>
-                        <Cards key={obj.title}>
+                        <Cards key={obj.id}>
 
                             <h3>{obj.title}</h3>
                             <p>R$ {obj.price},00</p>
                             <p>{obj.dueDate.slice(0, 10).split("-").reverse().join("/")}</p>
-                            <button onClick={this.getDetalhes}>Ver detalhes</button>
-                            <button onClick={() => this.props.aoAdicionarServicoNoCarrinho(obj.id)}>
-                                Adicionar ao carrinho</button>
+                            <button onClick={() => this.getDetalhes(obj.id)}>Ver detalhes</button>
+                            <button > Adicionar ao carrinho</button>
                             
                         </Cards>
                     </div>
+                  
                 )
             })
 
@@ -154,7 +182,10 @@ export default class Card extends React.Component {
                     </select>
                 </Filtro>
                 <CardBody>
-                    {produtosRenderizados}
+                   
+                 {this.state.tela === "cards" ? produtosRenderizados : <SaibaMais detalhes={this.state.detalhedocard} />}
+
+                    
                 </CardBody>
 
             </CorDeFundo>
