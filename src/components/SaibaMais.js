@@ -1,14 +1,24 @@
-import cards from "cads";
+import Cards from "./Cards/Card";
 import React from "react";
-import styledComponents from "styled-components";
 
 
-export default class SaibaMais extends React.Component{
 
-    render(){
-        return(
-            <p>teste1</p>
+export default class SaibaMais extends React.Component {
+
+
+    render() {
+        
+        return (
+            <div>
+                
+                <h3>Título:</h3> {this.props.detalhes.title}
+                <h3>Descrição:</h3> {this.props.detalhes.description}
+                <h3>Data:</h3> {this.props.detalhes.dueDate}
+                <h3>Preço:</h3> {this.props.detalhes.price}
+                
+            </div>
         )
 
+    
     }
 }

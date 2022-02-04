@@ -59,7 +59,7 @@ font-size:32px;
 class App extends React.Component {
 
 	state = {
-		tela: "",
+		tela: "app",
 		card:[]
 	}
 
