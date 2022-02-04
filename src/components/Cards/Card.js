@@ -26,30 +26,48 @@ const Filtro = styled.div`
 export default class Card extends React.Component {
 
     state = {
-        cards: []
+        cards: [],
+        ordenacao: "ordenacao",
+        Vminimo: "",
+        Vmaximo: '',
+        PorNome: ''
     }
 
-    componentDidMount () {
+    componentDidMount() {
         this.getServicos()
     }
 
-    getDetalhes =  async (event) => {
+
+    onchangeOrdenacao = event => {
+        this.setState({ ordenacao: event.target.value });
+    }
+    onChangeValorMinimo = event => {
+        this.setState({ Vminimo: event.target.value })
+    }
+    onChangeValorMaximo = event => {
+        this.setState({ Vmaximo: event.target.value })
+    }
+    onChangePorNome = event => {
+        this.setState({ PorNome: event.target.value })
+    }
+
+    getDetalhes = async (event) => {
         const url = `https://labeninjas.herokuapp.com/jobs/${event.id}`
-        
-        try{
+
+        try {
             const resposta = await axios.get(url, {
                 headers: {
                     Authorization: '9d13116d-4ff4-41b1-979f-9bf62ff1e99d'
                 }
             })
-            this.setState({cards:resposta.id})
-            console.log(resposta.id)
+            this.setState({ cards: resposta.id })
+            
 
-        } catch (erro){
-            console.log(erro.response)
+        } catch (erro) {
+           
             alert("Ocorreu um erro. Tente novamente!")
         }
-        
+
     }
 
 
@@ -58,60 +76,85 @@ export default class Card extends React.Component {
     getServicos = async () => {
         const url = "https://labeninjas.herokuapp.com/jobs"
 
-        try{
+        try {
             const resposta = await axios.get(url, {
                 headers: {
                     Authorization: '9d13116d-4ff4-41b1-979f-9bf62ff1e99d'
                 }
             })
-            this.setState({cards: resposta.data.jobs})
-           
-        }catch(erro){
-            console.log(erro.response)
+            this.setState({ cards: resposta.data.jobs })
+
+        } catch (erro) {
+
             alert("Serviços indisponíveis")
         }
     }
 
     render() {
-        console.log(this.state.cards)
-        let card = this.state.cards.map((obj) => {
-            return (
-                <Cards key={obj.title}>
-                    <h3>{obj.title}</h3>
-                    <p>R$ {obj.price},00</p>
-                    <p>{obj.dueDate.slice(0, 10).split("-").reverse().join("/")}</p>
-                    <button onClick={this.getDetalhes}>Ver detalhes</button>
-                    <button onClick={() => this.props.aoAdicionarServicoNoCarrinho(obj.id)}>
-                        Adicionar ao carrinho</button>
-                </Cards>
-            )
-        })
-        
+
+
+        const produtosRenderizados = this.state.cards
+            .filter(obj => {
+                return obj.title.toLowerCase().includes(this.state.PorNome.toLowerCase())
+
+            })
+            .filter(obj => {
+
+                return this.state.Vminimo === "" || obj.price >= this.state.Vminimo;
+            })
+            .filter(obj => {
+
+                return this.state.Vmaximo === "" || obj.price <= this.state.Vmaximo;
+            })
+            .sort((objA, objB) => {
+                switch (this.state.ordenacao) {
+                    case "menorvalor":
+                        return objA.price - objB.price;
+                    case "maiorvalor":
+                        return objB.price - objA.price;
+                }
+            })
+            .map(obj => {
+                return (
+                    <div>
+                        <Cards key={obj.title}>
+
+                            <h3>{obj.title}</h3>
+                            <p>R$ {obj.price},00</p>
+                            <p>{obj.dueDate.slice(0, 10).split("-").reverse().join("/")}</p>
+                            <button onClick={this.getDetalhes}>Ver detalhes</button>
+                            <button onClick={() => this.props.aoAdicionarServicoNoCarrinho(obj.id)}>
+                                Adicionar ao carrinho</button>
+                            
+                        </Cards>
+                    </div>
+                )
+            })
+
 
         return ((
 
             <CorDeFundo>
-                 <Filtro>
-                        <div>
-                            <input placeholder="Valor mínimo" type="number" ></input>
-                        </div>
-                        <div>
-                            <input placeholder="Valor máximo"  type="number" ></input>
-                        </div>
-                        <div>
-                            <input placeholder="Título ou descrição"  type="text" ></input>
-                        </div>
-                        <select>
-                            <option value="ordenacao">Sem ordenação</option>
-                            <option value="menorvalor">Menor valor</option>
-                            <option value="maiorvalor">Maior valor</option>
-                            <option value="titulo">Título</option>
-                            <option value="prazo">Prazo</option>
-                        </select>
-                    </Filtro>
+                <Filtro>
+                    <div>
+                        <input placeholder="Valor mínimo" value={this.state.Vminimo} type="number" onChange={this.onChangeValorMinimo}></input>
+                    </div>
+                    <div>
+                        <input placeholder="Valor máximo" value={this.state.Vmaximo} type="number" onChange={this.onChangeValorMaximo}></input>
+                    </div>
+                    <div>
+                        <input placeholder="Título" value={this.state.PorNome} type="text" onChange={this.onChangePorNome} ></input>
+                    </div>
+                    <select onChange={this.onchangeOrdenacao} name="select" value={this.state.ordenacao}>
+                        <option value="ordenacao">Sem ordenação</option>
+                        <option value="menorvalor">Menor valor</option>
+                        <option value="maiorvalor">Maior valor</option>
+                        <option value="titulo">Título</option>
+                        <option value="prazo">Prazo</option>
+                    </select>
+                </Filtro>
                 <CardBody>
-        
-                    {card}
+                    {produtosRenderizados}
                 </CardBody>
 
             </CorDeFundo>

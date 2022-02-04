@@ -77,7 +77,7 @@ export default class Carrinho extends React.Component{
                 {this.state.cards.map((produto) => {
                     
                     return (
-                        <div>
+                        <div key={produto.title}>
                             <p>Produto: {produto.titulo}</p>
                             <button onClick={() => this.removerProduto(produto.id)} type="submit">
                                 Remover
