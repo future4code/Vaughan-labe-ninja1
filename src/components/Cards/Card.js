@@ -105,9 +105,29 @@ export default class Card extends React.Component {
             .sort((objA, objB) => {
                 switch (this.state.ordenacao) {
                     case "menorvalor":
-                        return objA.price - objB.price;
+                        return objA.price - objB.price;                   
                     case "maiorvalor":
-                        return objB.price - objA.price;
+                        return objB.price - objA.price;                    
+                    case "titulo":
+                            const itemA= objA.title.toLowerCase();
+                            const itemB= objB.title.toLowerCase();
+                        
+                            if (itemA > itemB) {
+                                return 1;
+                            }
+                            if (itemA < itemB) {
+                                return -1;
+                            }
+                            return 0;                            
+                    case "prazo":
+                            if (objA.dueDate > objB.dueDate) {
+                                return 1;
+                            }
+                            if (objA.dueDate < objB.dueDate) {
+                                return -1;
+                            }
+                            return 0;
+                    default:                        
                 }
             })
             .map(obj => {
