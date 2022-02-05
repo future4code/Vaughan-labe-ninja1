@@ -62,7 +62,6 @@ export default class Card extends React.Component {
         this.getServicos()
     }
 
-
     onchangeOrdenacao = event => {
         this.setState({ ordenacao: event.target.value });
     }
@@ -95,10 +94,7 @@ export default class Card extends React.Component {
             alert("Ocorreu um erro. Tente novamente!")
         }
 
-    }
-
-
-
+    }  
 
     getServicos = async () => {
         const url = "https://labeninjas.herokuapp.com/jobs"
@@ -136,9 +132,29 @@ export default class Card extends React.Component {
             .sort((objA, objB) => {
                 switch (this.state.ordenacao) {
                     case "menorvalor":
-                        return objA.price - objB.price;
+                        return objA.price - objB.price;                   
                     case "maiorvalor":
-                        return objB.price - objA.price;
+                        return objB.price - objA.price;                    
+                    case "titulo":
+                            const itemA= objA.title.toLowerCase();
+                            const itemB= objB.title.toLowerCase();
+                        
+                            if (itemA > itemB) {
+                                return 1;
+                            }
+                            if (itemA < itemB) {
+                                return -1;
+                            }
+                            return 0;                            
+                    case "prazo":
+                            if (objA.dueDate > objB.dueDate) {
+                                return 1;
+                            }
+                            if (objA.dueDate < objB.dueDate) {
+                                return -1;
+                            }
+                            return 0;
+                    default:                        
                 }
             })
             .map(obj => {
@@ -151,8 +167,7 @@ export default class Card extends React.Component {
                             <p>R$ {obj.price},00</p>
                             <p>{obj.dueDate.slice(0, 10).split("-").reverse().join("/")}</p>
                             <button onClick={() => this.getDetalhes(obj.id)}>Ver detalhes</button>
-                            <button > Adicionar ao carrinho</button>
-                            
+                           <button onClick={() => this.props.adicionarAoCarrinho(obj)}>Adicionar ao carrinho</button>                            
                         </Cards>
                     </div>
                   
