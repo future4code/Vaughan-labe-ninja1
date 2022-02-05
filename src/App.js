@@ -60,8 +60,31 @@ class App extends React.Component {
 
 	state = {
 		tela: "",
-		card:[]
+		card:[],
+		carrinho:[]
 	}
+
+	adicionarAoCarrinho = (servico) => {
+		const novoCarrinho = [...this.state.carrinho, servico]
+		this.setState({carrinho: novoCarrinho})
+		alert(`${servico.title} adicionado ao carrinho!`)
+	}
+
+	tirarItemCarrinho = (id) => {
+		let produto = this.state.carrinho.filter((servico) => {
+            return  servico.id === id
+         })[0]
+        const indiceCarrinho = this.state.carrinho.indexOf(produto)
+        const arrayNovoCarrinho = [...this.state.carrinho]
+		arrayNovoCarrinho.splice(indiceCarrinho, 1)
+        this.setState({carrinho: arrayNovoCarrinho})
+	}
+
+	limparCarrinho = () => {
+		this.setState({cart: []})
+		alert('Compra Finalizada!')
+	}
+	
 
 	mudarTela = () => {
 		console.log(this.state.tela)
@@ -69,11 +92,11 @@ class App extends React.Component {
 			case "app":
 				return <Home cadastro={this.telaCadastro} telaCard={this.telaCard} />
 			case "carrinho":
-				return <Carrinho telaCard={this.telaCard} />
+				return <Carrinho telaCard={this.telaCard} carrinho={this.state.carrinho} tirarItemCarrinho={this.tirarItemCarrinho} limparCarrinho={this.limparCarrinho}/>
 			case "cadastro":
 				return <CadastroDeServico />
 			case "cards":
-				return <Card />
+				return <Card carrinho={this.state.carrinho} adicionarAoCarrinho={this.adicionarAoCarrinho}/>
 			default:
 				return <Home cadastro={this.telaCadastro} telaCard={this.telaCard} />
 		}
@@ -82,7 +105,6 @@ class App extends React.Component {
 
 	telaCard = () => {
 		this.setState({ tela: "cards" })
-
 	}
 
 	telaHome = () => {

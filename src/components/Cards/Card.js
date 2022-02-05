@@ -30,13 +30,12 @@ export default class Card extends React.Component {
         ordenacao: "ordenacao",
         Vminimo: "",
         Vmaximo: '',
-        PorNome: ''
+        PorNome: '',
     }
 
     componentDidMount() {
         this.getServicos()
     }
-
 
     onchangeOrdenacao = event => {
         this.setState({ ordenacao: event.target.value });
@@ -68,10 +67,7 @@ export default class Card extends React.Component {
             alert("Ocorreu um erro. Tente novamente!")
         }
 
-    }
-
-
-
+    }  
 
     getServicos = async () => {
         const url = "https://labeninjas.herokuapp.com/jobs"
@@ -123,8 +119,7 @@ export default class Card extends React.Component {
                             <p>R$ {obj.price},00</p>
                             <p>{obj.dueDate.slice(0, 10).split("-").reverse().join("/")}</p>
                             <button onClick={this.getDetalhes}>Ver detalhes</button>
-                            <button onClick={() => this.props.aoAdicionarServicoNoCarrinho(obj.id)}>
-                                Adicionar ao carrinho</button>
+                            <button onClick={() => this.props.adicionarAoCarrinho(obj)}>Adicionar ao carrinho</button>
                             
                         </Cards>
                     </div>
