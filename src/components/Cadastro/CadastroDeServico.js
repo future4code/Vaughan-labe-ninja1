@@ -1,53 +1,97 @@
-import { Checkbox, List, useCheckbox } from "@chakra-ui/react";
 import axios from "axios";
 import React from "react";
 import styled from "styled-components";
-const Container=styled.div`
-    width:450px;
-    height:800px;
-    margin:auto;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
+
+const ContainerCadastro = styled.div`
+    margin: 10px;
+    width: 50%;
+    min-height:80vh;
+    box-shadow: 0px 0px 4px gray;
+    justify-content:space-between;
+    display: flex;
+    flex-direction: column;
+    align-items:center; 
 `;
-const CorDeFundo = styled.div`
-background-color: #fdf6e6;
-height: 2fr;
-display: grid;
+const FundoCadastro = styled.div`
+display: flex;
+flex-direction: column;
+align-items:center;
 `
-const Input=styled.input`
-    width:300px;
+const InputData=styled.input`
+    width:100%;
     margin:15px 0px;
-`;
-const Select=styled.select`
-    width:310px;
-    margin:15px 0px;
-`;
-const Button= styled.button`
-    margin-top:25px;
-    box-shadow:inset 0px 1px 0px 0px #FCE2C1;
-    background:linear-gradient(to bottom, #FFC477 5%, #F6AF56 100%);
-    background-color:#ffc477;
-    border-radius:6px;
-    border:1px solid #EEB44F;
-    display:inline-block;
-    cursor:pointer;
-    color: #191817;
-    font-family:Arial;
+    padding: 5px;
     font-size:15px;
-    font-weight:bold;
-    padding:6px 24px;
-    text-decoration:none;
-    text-shadow:0px 1px 0px #CC9F52;
-    &:hover {
-    background:linear-gradient(to bottom, #F6AF56 5%, #FFC477 100%);
-    background-color:#F6AF56;}
-    &:active {
-    position:relative;
-    top:1px;
+`;
+const ButtonCadastro = styled.button`
+    margin: 5%;
+    padding: 10px 15px;
+    font-size:18px;
+    border-radius:18px;	
+	cursor:pointer;
+    margin-bottom:40px;
+	background-color:#7763BF;
+	color: white;
+	border: none;
+        
+    &:hover{
+        transition: 400ms;
+	    background-color:#A89AD9;
     }
 `;
+
+const DivRegistro = styled.div`
+display: flex;
+flex-direction: column;
+width: 30%;
+align-items:center;
+margin-bottom: -40px ;
+    >input{
+        margin-bottom: 20px;
+        width: 100%;
+        padding: 5px 10px;
+        font-size:15px;
+        border-radius:15px;
+        background: white;
+        border: none;
+    }
+`
+
+const Fieldset = styled.fieldset`
+text-align:center;
+width: 30%;
+border: none;
+ >div>p{
+     font-size:20px;
+ }
+`
+
+const DivPagamento = styled.div`
+    >label{
+        user-select:none;
+        cursor: pointer;
+        margin: 3px;
+        box-shadow: 0px 0px 2px gray;
+        display: flex;
+        padding: 0 8px;
+        margin-bottom: 10px;
+    }
+    >label>input{
+        margin-right:10px;
+        cursor: pointer;       
+    }
+`
+const CadastroFooter = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    width: 30%;
+    >p{ 
+        margin-bottom:-10px;
+        font-size:18px;
+    }
+`
+
 export default class CadastroDeServico extends React.Component{
     state = {
         servicos:[],
@@ -126,24 +170,32 @@ export default class CadastroDeServico extends React.Component{
 
     render(){
         return(
-          <CorDeFundo>
-                <Container>
-                    <h1>Cadastre o seu serviço</h1>
-                    <Input value={this.state.inputTitulo} onChange={this.onChangeInputTitulo} placeholder="Título"/>
-                    <Input value={this.state.inputDescricao} onChange={this.onChangeInputDescricao} placeholder="Descrição"/>
-                    <Input value={this.state.inputPreco} onChange={this.onChangeInputPreco} placeholder="Preço" type="number"/>
-                    <fieldset value={this.state.selectPagamento} onChange={this.onChangeSelectPagamento} placeholder="Formas de Pagamento" >
-                        <div><label> <strong> Formas de Pagamento</strong></label></div>
-                        <div><input type="checkbox" id="debito" value="debito" ></input><label> Cartão de Débito</label></div>
-                        <div><input type="checkbox"id="credito" value="credito" ></input><label> Cartão de Crédito</label></div>
-                        <div><input type="checkbox" id="paypal" value="paypal" ></input><label> PayPal</label></div>
-                        <div><input type="checkbox" id="boleto" value="boleto" ></input><label> Boleto</label></div>
-                       <div> <input type="checkbox" id="pix" value="pix" ></input><label> Pix</label></div>
-                    </fieldset>
-                    <Input value={this.state.inputData} onChange={this.onChangeInputData} type="date"/>
-                    <Button onClick={this.cadastrarServicos}>Cadastrar Serviços</Button>
-                </Container>
-          </CorDeFundo>
+          <FundoCadastro>
+                <ContainerCadastro>                    
+                    <DivRegistro>
+                        <h2>Cadastre o seu serviço</h2>
+                        <input value={this.state.inputTitulo} onChange={this.onChangeInputTitulo} placeholder="Título"/>
+                        <input value={this.state.inputDescricao} onChange={this.onChangeInputDescricao} placeholder="Descrição"/>
+                        <input value={this.state.inputPreco} onChange={this.onChangeInputPreco} placeholder="Preço" type="number"/>
+                    </DivRegistro>
+                   
+                    <Fieldset value={this.state.selectPagamento} onChange={this.onChangeSelectPagamento} placeholder="Formas de Pagamento" >
+                        <h3> Formas de Pagamento</h3>
+                        <DivPagamento><label><input type="checkbox" id="debito" value="debito"/>Cartão de Débito</label></DivPagamento>
+                        <DivPagamento><label><input type="checkbox" id="credito" value="credito"/>Cartão de Crédito</label></DivPagamento>
+                        <DivPagamento><label><input type="checkbox" id="paypal" value="paypal"/>PayPal</label></DivPagamento>
+                        <DivPagamento><label><input type="checkbox" id="boleto" value="boleto"/>Boleto</label></DivPagamento>
+                        <DivPagamento><label><input type="checkbox" id="pix" value="pix"/>Pix</label></DivPagamento>
+                    </Fieldset>
+                    
+                    <CadastroFooter>
+                        <p>Prazo:</p>
+                        <InputData value={this.state.inputData} onChange={this.onChangeInputData} type="date"/>
+                        <ButtonCadastro onClick={this.cadastrarServicos}>Cadastrar Serviços</ButtonCadastro>
+                    </CadastroFooter>
+                    
+                </ContainerCadastro>
+          </FundoCadastro>
         )
     }
 }

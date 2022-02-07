@@ -1,32 +1,81 @@
 import React from "react";
 import styled from "styled-components";
-import ButtonHome from "./ButtonHome";
-import PostIt from '../Cards/CardsFlutuantes'
+import Logo2 from './imagens-home/labeninja-logo.png'
+import ProcNinja from './imagens-home/browsing.jpg'
+import BecoNinja from './imagens-home/become-ninja.png'
 
-const Home1 = styled.h1`
-display: flex;
-flex-direction: column;
-align-items: center;
-align-self: center;
-`
-
-
-const Home2 = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
-align-self: center;
-`
 const CorDeFundo = styled.div`
-background-color: #fdf6e6;
 height: 100% ;
 `
-const FlexPostIt = styled.div`
-display: flex;
-height: 189px ;
-/* margin: 20px 0 20px; */
-align-items: center;
-justify-content: space-around;
+const BotaoHome = styled.button`
+	cursor:pointer;
+    border-radius:15px;	
+	font-size:19px;
+	padding:6px 24px;
+	text-decoration:none;
+	background-color:#7763BF;
+	color: white;
+	border: none;
+	
+    &:hover {
+	transition:500ms;
+	background-color:#A89AD9;
+    }
+`
+
+const BodyProcurarNinja = styled.div`
+    margin-top: 50px;
+    width:100%;
+    display: flex;
+    align-items:center;
+    justify-content: space-between;
+    background-color:#A89AD9;
+    
+    >img{
+        height: 400px;
+        width: 50%;
+        object-fit: cover;
+    }
+
+`
+const TextoProcurar = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px;   
+    text-align:center; 
+    >p{
+        font-size:19px;
+    }
+
+`
+
+const BodySerNinja = styled.div`
+    margin-top: 50px;
+    width:100%;
+    display: flex;
+    align-items:center;
+    justify-content: space-between;
+    background-color:#A89AD9;
+    
+    >img{
+        height: 400px;
+        width: 50%;
+        object-fit: cover;
+    }
+
+`
+
+const LabeNinjas = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items:center;
+    img{
+        padding: 30px;
+        height: 100%;
+        width: auto;
+    }    
 `
 
 
@@ -35,19 +84,39 @@ export default class Home extends React.Component {
         console.log('home', this.props)
         return (
             <CorDeFundo>
+                <BodyProcurarNinja>
+                    <img src={ProcNinja} alt=""/>
+                    <TextoProcurar>
+                    <h1>Os melhores profissionais à um clique de distância</h1>
+                    <p>
+                        A LabeNinjas é uma plataforma no qual os mais diversos profissionais,<br/>
+                        das mais diversas áreas e regiões são facilmente encontrados,<br/>
+                        tudo de uma jeito rápido e preciso como um  verdadeiro ninja!
+                    </p>
+                    <BotaoHome onClick={this.props.telaCard}>Contratar um LabeNinja</BotaoHome> 
+                    </TextoProcurar>
+                    
+                    
+                </BodyProcurarNinja>
 
-                <CorDeFundo>
-                    <Home1>LabeNinjas</Home1>
-                    <Home2>O talento certo no momento certo</Home2>
-                    <ButtonHome cadastro={this.props.cadastro} telaCard={this.props.telaCard} />
-
-                </CorDeFundo>
-                <FlexPostIt><PostIt /></FlexPostIt>
-
-            </CorDeFundo>
-
-
-
+                <BodySerNinja>
+                <TextoProcurar>
+                    <h1>Aumente o seu alcance profissional</h1>
+                    <p>
+                        Se você quer aumentar ainda mais o seu alcance e conseguir mais clientes<br/>
+                        para seu serviço. Torne-se um ninja, venha fazer parte da LabeNinjas!
+                    </p>
+                    <BotaoHome onClick={this.props.cadastro}>Quero ser LabeNinja</BotaoHome>
+                    </TextoProcurar>
+                     
+                    <img src={BecoNinja} alt=""/>                    
+                </BodySerNinja>
+                    
+                <LabeNinjas>
+                    <img src={Logo2} alt=""/>
+                </LabeNinjas>
+                                                
+           </CorDeFundo>
         )
     }
 }
