@@ -1,67 +1,60 @@
-
 import React from 'react'
-// import Card from './components/Cards/Card';
 import styled from 'styled-components'
 import Home from './components/Home/Home'
 import Carrinho from './components/Carrinho/Carrinho';
-import { ChakraProvider, position } from '@chakra-ui/react';
 import Card from './components/Cards/Card';
-import { theme } from './components/Theme/Theme';
-import PostIt from './components/Cards/CardsFlutuantes'
 import CadastroDeServico from './components/Cadastro/CadastroDeServico'
 import {BotaoCentro} from "./components/Home/ButtonHome"
+import ModalDetalhes from './components/ModalDetalhes';
+import WhiteLogo from './components/Imagens/white-labeninja-logo.png'
 
 
+const MainBody = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+`
 
 const Header = styled.header`
-   display: flex;
-   justify-content: space-between;
-   align-items:center;
-    background-color:#F6AF56;
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+    background-color:#7660A6;
 	padding: 10px;
-	border: solid 1px black;
+	color: white;
 	height:50px;
 	 ;
 `
 const CorDeFundo = styled.div`
-background-color: #fdf6e6;
-height: 500px;
-display: grid;
+background-color:#f5f5fc;
+min-height:79vh;
 `
 const Footer = styled.footer`
-	
-	bottom: 0;
-	position: fixed ; 
-	
-    background-color: #F6AF56;
+    background-color: #7660A6;
 	text-align: center;
-    padding: 3px;
-	width: 100%;
-	border: solid 1px black;
-	
+	color:white;   
+	width: 100%;	
 `
-const Labeninjas = styled.h1`
-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-font-size:32px;
-
-
- `
-// // const FlexPostIt = styled.div`
-// // display: flex;
-// // height: 189px ;
-// // /* margin: 20px 0 20px; */
-// // align-items: center;
-// // justify-content: space-around;
-
-
-// `
+const Labeninjas = styled.a`
+	display: flex;
+	align-items:center;
+	font-size: 30px;
+	font-weight: bold;
+	cursor: pointer;
+	>img{
+		height: 45px;
+		margin-right: 5px;
+	}
+`
 
 class App extends React.Component {
 
 	state = {
-		tela: "app",
+		tela: "home",
 		card:[],
-    carrinho:[]
+    	carrinho:[],
+		detalhesCard:[],
+		showDetails: false
 	}
 
 	adicionarAoCarrinho = (servico) => {
@@ -82,9 +75,22 @@ class App extends React.Component {
 
 	limparCarrinho = () => {
 		this.setState({cart: []})
-		alert('Compra Finalizada!')
+		this.setState({ tela: "carrinho" })
+		alert('Compra Finalizada!')		
 	}
-	
+
+	getDetalhes = (details) => {
+			const servicoDetalhos = [details]
+            this.setState({ detalhesCard: servicoDetalhos})
+	}
+
+	showModal = e => {
+		this.setState({ showDetails :true })
+	}
+
+	closeModal = e => {
+		this.setState({ showDetails: false })
+	}
 
 	mudarTela = () => {
 		console.log(this.state.tela)
@@ -96,7 +102,7 @@ class App extends React.Component {
 			case "cadastro":
 				return <CadastroDeServico />
 			case "cards":
-				return <Card carrinho={this.state.carrinho} adicionarAoCarrinho={this.adicionarAoCarrinho}/>
+				return <Card carrinho={this.state.carrinho} adicionarAoCarrinho={this.adicionarAoCarrinho} getDetalhes={this.getDetalhes} showModal={this.showModal}/>
 			default:
 				return <Home cadastro={this.telaCadastro} telaCard={this.telaCard} />
 		}
@@ -122,23 +128,31 @@ class App extends React.Component {
 		return (
 
 
-			<div>
+			<MainBody>
 
 				<Header>
-					<Labeninjas>LabeNinjas</Labeninjas>
+					<Labeninjas onClick={() => this.telaHome()}>
+						<img src={WhiteLogo} alt=""/>
+						LabeNinjas
+					</Labeninjas>
 					<div>
-						<BotaoCentro onClick={this.telaHome} >Home</BotaoCentro>
+						<BotaoCentro onClick={this.telaHome}>Home</BotaoCentro>
+						<BotaoCentro onClick={this.telaCard}>Produtos</BotaoCentro>
+						<BotaoCentro onClick={this.telaCadastro}>Cadastrar</BotaoCentro>
 						<BotaoCentro onClick={this.telaCarrinho}>Carrinho</BotaoCentro>
-
 					</div>
 				</Header>
+				
+				<ModalDetalhes 
+				detalhesCard={this.state.detalhesCard}
+				showDetails={this.state.showDetails}
+				closeModal= {this.closeModal}/>
+												
 
 				<CorDeFundo>
 					{this.mudarTela()}
-
 				</CorDeFundo>
 
-				{/* <FlexPostIt><PostIt /></FlexPostIt> */}
 				<Footer>
 					<h2>Central de atendimento</h2>
 					<p>+55 (11) 1111-1111</p>
@@ -146,7 +160,7 @@ class App extends React.Component {
 
 				</Footer>
 
-			</div>
+			</MainBody>
 
 
 		);
@@ -155,4 +169,3 @@ class App extends React.Component {
 
 
 export default App
-
